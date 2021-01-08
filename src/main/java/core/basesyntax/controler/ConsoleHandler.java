@@ -25,12 +25,18 @@ public class ConsoleHandler {
                 String[] split = command.split(" ");
                 int value = Integer.parseInt(split[0]);
                 double risk = Double.parseDouble(split[1]);
+                if (value <= 0 || risk <= 0) {
+                    System.out.println("Value and risk can not be zero or less");
+                    continue;
+                }
                 bet = new Bet(value, risk);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
                 System.out.println("Будь-ласка введіть коректні дані");
             }
-            betDao.addBet(bet);
-            System.out.println(bet);
+            if (bet != null) {
+                betDao.addBet(bet);
+                System.out.println(bet.toString());
+            }
         }
     }
 
@@ -46,6 +52,10 @@ public class ConsoleHandler {
                 String[] split = command.split(" ");
                 String name = split[0];
                 String lastname = split[1];
+                if (name.equals("")|| lastname.equals("")) {
+                    System.out.println("Please enter correct name and lastname");
+                    continue;
+                }
                 user = new User(name, lastname);
             } catch (NumberFormatException e) {
                 System.out.println("Будь-ласка введіть коректні дані");
