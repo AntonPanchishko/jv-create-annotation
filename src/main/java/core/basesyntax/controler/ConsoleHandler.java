@@ -9,29 +9,35 @@ import core.basesyntax.model.User;
 import java.util.Scanner;
 
 public class ConsoleHandler {
-    BetDao betDao = new BetDaoImpl();
-    UserDao userDao = new UserDaoImpl();
+    private static final String EXIT = "q";
+    private static final String DELIMITER = " ";
+    private static final int VALUE_INDEX = 0;
+    private static final int RISK_INDEX = 1;
+    private static final int NAME_INDEX = 0;
+    private static final int LASTNAME_INDEX = 1;
+    private BetDao betDao = new BetDaoImpl();
+    private UserDao userDao = new UserDaoImpl();
 
     public void betHandler() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             String command = scanner.nextLine();
-            if (command.equalsIgnoreCase("q")) {
+            if (command.equalsIgnoreCase(EXIT)) {
                 return;
             }
             Bet bet = null;
             try {
-                String[] split = command.split(" ");
-                int value = Integer.parseInt(split[0]);
-                double risk = Double.parseDouble(split[1]);
+                String[] split = command.split(DELIMITER);
+                int value = Integer.parseInt(split[VALUE_INDEX]);
+                double risk = Double.parseDouble(split[RISK_INDEX]);
                 if (value <= 0 || risk <= 0) {
                     System.out.println("Value and risk can not be zero or less");
                     continue;
                 }
                 bet = new Bet(value, risk);
-            } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                System.out.println("Будь-ласка введіть коректні дані");
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                System.out.println("Enter correct data");
             }
             if (bet != null) {
                 betDao.addBet(bet);
@@ -44,21 +50,21 @@ public class ConsoleHandler {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String command = scanner.nextLine();
-            if (command.equalsIgnoreCase("q")) {
+            if (command.equalsIgnoreCase(EXIT)) {
                 return;
             }
             User user = null;
             try {
-                String[] split = command.split(" ");
-                String name = split[0];
-                String lastname = split[1];
+                String[] split = command.split(DELIMITER);
+                String name = split[NAME_INDEX];
+                String lastname = split[LASTNAME_INDEX];
                 if (name.equals("")|| lastname.equals("")) {
                     System.out.println("Please enter correct name and lastname");
                     continue;
                 }
                 user = new User(name, lastname);
             } catch (NumberFormatException e) {
-                System.out.println("Будь-ласка введіть коректні дані");
+                System.out.println("Enter correct data");
             }
             if (user != null) {
                 userDao.addUser(user);
