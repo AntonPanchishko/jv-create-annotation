@@ -60,8 +60,10 @@ public class ConsoleHandler {
             } catch (NumberFormatException e) {
                 System.out.println("Будь-ласка введіть коректні дані");
             }
-            userDao.addUser(user);
-            System.out.println();
+            if (user != null) {
+                userDao.addUser(user);
+                System.out.println(user.toString());
+            }
         }
     }
 }
