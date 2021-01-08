@@ -63,7 +63,7 @@ public class ConsoleHandler {
                     continue;
                 }
                 user = new User(name, lastname);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                 System.out.println("Enter correct data");
             }
             if (user != null) {
