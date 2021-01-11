@@ -2,6 +2,7 @@ package core.basesyntax.lib;
 
 import core.basesyntax.dao.BetDao;
 import core.basesyntax.dao.UserDao;
+import core.basesyntax.exception.WrongAnnotationException;
 import core.basesyntax.factory.Factory;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -10,10 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
 public class Injector implements Inject {
-    @Override
-    public Class<? extends Annotation> annotationType() {
-        return null;
-    }
 
     public static Object getInstance(Class clazz) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -28,7 +25,7 @@ public class Injector implements Inject {
                         || !(Factory.getUserDao().getClass()
                         .isAnnotationPresent(Dao.class)));
                 if (predicate.test(field)) {
-                    throw new RuntimeException("No such class annotation");
+                    throw new WrongAnnotationException("No such class annotation");
                 }
                 if (field.getType() == UserDao.class) {
                     field.set(instance, Factory.getUserDao());
@@ -38,5 +35,10 @@ public class Injector implements Inject {
             }
         }
         return instance;
+    }
+
+    @Override
+    public Class<? extends Annotation> annotationType() {
+        return null;
     }
 }
