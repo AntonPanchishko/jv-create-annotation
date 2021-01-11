@@ -12,10 +12,10 @@ public class Main {
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         ConsoleHandler consoleHandler = (ConsoleHandler) Injector
                 .getInstance(ConsoleHandler.class);
-        /*System.out.println("Enter value and risk");
+        System.out.println("Enter value and risk");
         consoleHandler.betHandler();
         BetDao betDao = Factory.getBetDao();
-        System.out.println("All bets: " + betDao.getAllBets());*/
+        System.out.println("All bets: " + betDao.getAllBets());
 
         System.out.println("Enter you name and lastname");
         consoleHandler.userHandler();
