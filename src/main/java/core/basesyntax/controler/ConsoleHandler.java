@@ -1,8 +1,9 @@
 package core.basesyntax.controler;
 
 import core.basesyntax.dao.BetDao;
+import core.basesyntax.dao.BetDaoImpl;
 import core.basesyntax.dao.UserDao;
-import core.basesyntax.lib.Inject;
+import core.basesyntax.dao.UserDaoImpl;
 import core.basesyntax.model.Bet;
 import core.basesyntax.model.User;
 import java.util.Scanner;
@@ -14,10 +15,8 @@ public class ConsoleHandler {
     private static final int RISK_INDEX = 1;
     private static final int NAME_INDEX = 0;
     private static final int LASTNAME_INDEX = 1;
-    @Inject
-    private BetDao betDao;
-    @Inject
-    private UserDao userDao;
+    private BetDao betDao = new BetDaoImpl();
+    private UserDao userDao = new UserDaoImpl();
 
     public void betHandler() {
         Scanner scanner = new Scanner(System.in);
@@ -59,7 +58,7 @@ public class ConsoleHandler {
                 String[] split = command.split(DELIMITER);
                 String name = split[NAME_INDEX];
                 String lastname = split[LASTNAME_INDEX];
-                if (name.equals("") || lastname.equals("")) {
+                if (name.equals("")|| lastname.equals("")) {
                     System.out.println("Please enter correct name and lastname");
                     continue;
                 }
